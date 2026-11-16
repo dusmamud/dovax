@@ -24,6 +24,19 @@
 	--text-hero: clamp(2.5rem, 2rem + 2.5vw, 4rem);
 	--text-h2: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
 	--text-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+
+	/* Gentle float for the hero shoe + chips */
+	--animate-float: float-y 6s ease-in-out infinite;
+}
+
+@keyframes float-y {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
 }
 
 /* Token-based dark mode: semantic tokens flip, components follow */
