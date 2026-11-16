@@ -9,9 +9,9 @@
 	];
 </script>
 
-<section class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8">
+<section class="bg-cream">
 	<div
-		class="reveal grid gap-10 rounded-3xl bg-cream px-6 py-12 sm:px-10 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-14 lg:py-16"
+		class="reveal mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-20"
 		use:reveal
 	>
 		<div>
