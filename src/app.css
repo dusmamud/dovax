@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource/sora/400.css';
+@import '@fontsource/sora/600.css';
+@import '@fontsource/sora/700.css';
+@import '@fontsource/sora/800.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-display: 'Sora', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+	/* Dovax palette — clean off-white / cream / black */
+	--color-paper: #faf9f7;
+	--color-cream: #f3f1ec;
+	--color-card: #f4f4f2;
+	--color-ink: #111111;
+	--color-ink-soft: #57534e;
+	--color-line: #e7e5e0;
+	--color-gold: #d97706;
+
+	/* Fluid type — clamp() with a rem term, max <= 2.5x min */
+	--text-hero: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+	--text-h2: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
+	--text-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+}
+
+/* Token-based dark mode: semantic tokens flip, components follow */
+.dark {
+	--color-paper: #121212;
+	--color-cream: #1c1c1c;
+	--color-card: #1e1e1e;
+	--color-ink: #e8eaed;
+	--color-ink-soft: #a8a29e;
+	--color-line: #292524;
+}
+
+/* Safe-area utilities — Tailwind v4 ships none, so define them once */
+@utility pt-safe {
+	padding-top: env(safe-area-inset-top, 0px);
+}
+@utility pb-safe {
+	padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.75rem);
+}
+
+@layer base {
+	html {
+		-webkit-text-size-adjust: 100%;
+	}
+
+	body {
+		@apply bg-paper font-sans text-ink antialiased;
+	}
+
+	::selection {
+		background: var(--color-ink);
+		color: var(--color-paper);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--color-ink);
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+}
+
+/* View Transitions for full page loads (MPA-style) in supporting browsers */
+@view-transition {
+	navigation: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+/* Reveal-on-scroll: .reveal hides until the IntersectionObserver action adds
+   .is-visible. No-JS users get visible content via the <noscript> style in app.html. */
+.reveal {
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.6s ease-out,
+		transform 0.6s ease-out;
+}
+
+.reveal.is-visible {
+	opacity: 1;
+	transform: none;
+}
+
+/* CSS safety net for reduced motion (does NOT affect Svelte WAAPI transitions —
+   those must be gated in JS via prefersReducedMotion from svelte/motion) */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}

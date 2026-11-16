@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+		/>
+		<meta name="text-scale" content="scale" />
+		<meta
+			name="description"
+			content="Dovax — modern sneakers designed for everyday comfort, performance and style. Free shipping on orders above ₹999."
+		/>
+		<meta name="theme-color" content="#faf9f7" />
+		<title>Dovax — Footwear for a Bolder Tomorrow</title>
+		<!-- No-JS fallback: .reveal sections start at opacity 0 and are shown by
+		     the IntersectionObserver action. Without JS they would stay invisible. -->
+		<noscript>
+			<style>
+				.reveal {
+					opacity: 1 !important;
+					transform: none !important;
+				}
+			</style>
+		</noscript>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
