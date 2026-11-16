@@ -3,6 +3,10 @@
 	import { products } from '#lib/data/products.js';
 	import { reveal } from '#lib/actions/reveal.js';
 	import ProductCard from '#lib/components/ProductCard.svelte';
+
+	const bestSellers = products
+		.filter((product) => product.badges.includes('bestseller'))
+		.sort((a, b) => b.reviewCount - a.reviewCount);
 </script>
 
 <section
@@ -17,7 +21,7 @@
 			<h2 class="mt-3 font-display text-h2 font-bold">Best Sellers</h2>
 		</div>
 		<a
-			href="/#best-sellers"
+			href="/best-sellers/"
 			class="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-paper px-5 text-sm font-semibold transition-colors hover:bg-cream"
 		>
 			View All
@@ -25,7 +29,7 @@
 		</a>
 	</div>
 	<div class="mt-8 grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-		{#each products as product (product.id)}
+		{#each bestSellers as product (product.id)}
 			<ProductCard {product} />
 		{/each}
 	</div>

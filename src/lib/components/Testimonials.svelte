@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { ChevronLeft, ChevronRight, Star } from '@lucide/svelte';
+	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { reveal } from '#lib/actions/reveal.js';
+	import RatingStars from '#lib/components/RatingStars.svelte';
 
 	interface Testimonial {
 		name: string;
@@ -39,11 +40,7 @@
 
 {#snippet card(testimonial: Testimonial)}
 	<figure class="flex h-full flex-col rounded-2xl border border-line bg-card p-6 sm:p-8">
-		<div class="flex gap-0.5" aria-hidden="true">
-			{#each [0, 1, 2, 3, 4] as star (star)}
-				<Star class="size-4 fill-gold text-gold" />
-			{/each}
-		</div>
+		<RatingStars rating={5} size={16} />
 		<blockquote class="mt-4 flex-1 text-base leading-relaxed sm:text-lg">
 			“{testimonial.quote}”
 		</blockquote>
