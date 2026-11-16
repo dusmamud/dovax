@@ -6,7 +6,6 @@
 	import { formatPrice } from '#lib/utils/format.js';
 
 	let drawerEl: HTMLDivElement | undefined = $state();
-	let checkoutNotice = $state(false);
 
 	const progress = $derived(
 		Math.min((cart.subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100)
@@ -39,7 +38,6 @@
 	// DOM work only: lock body scroll + move focus into the drawer while open.
 	$effect(() => {
 		if (!cart.isOpen) return;
-		checkoutNotice = false;
 		document.body.style.overflow = 'hidden';
 		drawerEl?.querySelector<HTMLElement>('button')?.focus();
 		return () => {
@@ -123,7 +121,7 @@
 				</div>
 
 				<ul class="flex-1 divide-y divide-line overflow-y-auto px-5">
-					{#each cart.lines as line (line.product.id)}
+					{#each cart.lines as line (`${line.product.id}:${line.size}`)}
 						<li class="flex gap-4 py-4">
 							<img
 								src={line.product.image}
@@ -140,13 +138,14 @@
 										<p class="truncate font-display text-sm font-semibold">
 											{line.product.name}
 										</p>
+										<p class="mt-0.5 text-sm text-ink-soft">Size {line.size}</p>
 										<p class="mt-0.5 text-sm text-ink-soft">
 											{formatPrice(line.product.price)} each
 										</p>
 									</div>
 									<button
 										type="button"
-										onclick={() => cart.remove(line.product.id)}
+										onclick={() => cart.remove(line.product.id, line.size)}
 										aria-label="Remove {line.product.name}"
 										class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-cream hover:text-ink"
 									>
@@ -157,7 +156,7 @@
 									<div class="flex items-center rounded-full border border-line">
 										<button
 											type="button"
-											onclick={() => cart.setQty(line.product.id, line.qty - 1)}
+											onclick={() => cart.setQty(line.product.id, line.size, line.qty - 1)}
 											aria-label="Decrease quantity of {line.product.name}"
 											class="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-cream"
 										>
@@ -168,7 +167,7 @@
 										</span>
 										<button
 											type="button"
-											onclick={() => cart.setQty(line.product.id, line.qty + 1)}
+											onclick={() => cart.setQty(line.product.id, line.size, line.qty + 1)}
 											aria-label="Increase quantity of {line.product.name}"
 											class="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-cream"
 										>
@@ -189,19 +188,21 @@
 						<p class="text-sm text-ink-soft">Subtotal</p>
 						<p class="font-display text-lg font-bold">{formatPrice(cart.subtotal)}</p>
 					</div>
-					<button
-						type="button"
-						onclick={() => (checkoutNotice = true)}
+					<a
+						href="/checkout/"
+						onclick={close}
 						class="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink text-sm font-semibold text-white transition-colors hover:bg-black"
 					>
 						Checkout
 						<ArrowRight class="size-4" aria-hidden="true" />
-					</button>
-					{#if checkoutNotice}
-						<p role="status" class="mt-3 text-center text-sm text-ink-soft">
-							Checkout coming soon — we&apos;re launching online orders shortly.
-						</p>
-					{/if}
+					</a>
+					<a
+						href="/cart/"
+						onclick={close}
+						class="mt-3 flex min-h-11 w-full items-center justify-center text-sm font-semibold text-ink-soft underline-offset-4 transition-colors hover:text-ink hover:underline"
+					>
+						View cart
+					</a>
 				</div>
 			{/if}
 		</div>

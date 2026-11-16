@@ -3,15 +3,20 @@ import { getProduct, type Product } from '#lib/data/products.js';
 
 export interface CartItem {
 	id: string;
+	size: string;
 	qty: number;
 }
 
 export interface CartLine {
 	product: Product;
+	size: string;
 	qty: number;
 }
 
 const STORAGE_KEY = 'dovax-cart-v1';
+
+/** Default size for legacy stored entries that predate size-keyed lines. */
+const DEFAULT_SIZE = 'UK 9';
 
 /** Free shipping unlocks at this subtotal (INR). */
 export const FREE_SHIPPING_THRESHOLD = 999;
@@ -28,7 +33,7 @@ class CartStore {
 		this.items
 			.map((item) => {
 				const product = getProduct(item.id);
-				return product ? { product, qty: item.qty } : null;
+				return product ? { product, size: item.size, qty: item.qty } : null;
 			})
 			.filter((line): line is CartLine => line !== null)
 	);
@@ -47,15 +52,22 @@ class CartStore {
 			if (!raw) return;
 			const parsed: unknown = JSON.parse(raw);
 			if (!Array.isArray(parsed)) return;
-			this.items = parsed.filter(
-				(entry): entry is CartItem =>
-					typeof entry === 'object' &&
-					entry !== null &&
-					typeof (entry as CartItem).id === 'string' &&
-					typeof (entry as CartItem).qty === 'number' &&
-					(entry as CartItem).qty > 0 &&
-					getProduct((entry as CartItem).id) !== undefined
-			);
+			this.items = parsed
+				.filter(
+					(entry): entry is CartItem =>
+						typeof entry === 'object' &&
+						entry !== null &&
+						typeof (entry as CartItem).id === 'string' &&
+						typeof (entry as CartItem).qty === 'number' &&
+						(entry as CartItem).qty > 0 &&
+						getProduct((entry as CartItem).id) !== undefined
+				)
+				.map((entry) => ({
+					id: entry.id,
+					// Migrate pre-size entries (stored as { id, qty }) to the default size.
+					size: typeof entry.size === 'string' && entry.size ? entry.size : DEFAULT_SIZE,
+					qty: entry.qty
+				}));
 		} catch {
 			// Corrupted storage — start with an empty cart.
 		}
@@ -70,27 +82,27 @@ class CartStore {
 		}
 	}
 
-	add(id: string): void {
-		const existing = this.items.find((item) => item.id === id);
+	add(id: string, size: string = DEFAULT_SIZE): void {
+		const existing = this.items.find((item) => item.id === id && item.size === size);
 		if (existing) {
 			existing.qty += 1;
 		} else {
-			this.items.push({ id, qty: 1 });
+			this.items.push({ id, size, qty: 1 });
 		}
 		this.#save();
 	}
 
-	remove(id: string): void {
-		this.items = this.items.filter((item) => item.id !== id);
+	remove(id: string, size: string): void {
+		this.items = this.items.filter((item) => !(item.id === id && item.size === size));
 		this.#save();
 	}
 
-	setQty(id: string, qty: number): void {
+	setQty(id: string, size: string, qty: number): void {
 		if (qty <= 0) {
-			this.remove(id);
+			this.remove(id, size);
 			return;
 		}
-		const existing = this.items.find((item) => item.id === id);
+		const existing = this.items.find((item) => item.id === id && item.size === size);
 		if (existing) {
 			existing.qty = qty;
 			this.#save();
