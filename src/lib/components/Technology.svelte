@@ -29,7 +29,7 @@
 				further in every step.
 			</p>
 			<a
-				href="/#best-sellers"
+				href="/technology/"
 				class="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-semibold text-ink transition-colors hover:bg-cream"
 			>
 				Learn More

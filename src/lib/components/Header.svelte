@@ -1,19 +1,23 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
-	import { Menu, Search, ShoppingBag, User, X } from '@lucide/svelte';
+	import { Heart, Menu, Search, ShoppingBag, User, X } from '@lucide/svelte';
 	import { cart } from '#lib/stores/cart.svelte.js';
+	import { wishlist } from '#lib/stores/wishlist.svelte.js';
+	import SearchOverlay from '#lib/components/SearchOverlay.svelte';
 
 	const navLinks = [
-		{ label: 'Men', href: '/#categories' },
-		{ label: 'Women', href: '/#categories' },
-		{ label: 'New Arrivals', href: '/#best-sellers' },
-		{ label: 'Best Sellers', href: '/#best-sellers' },
-		{ label: 'About', href: '/#technology' }
+		{ label: 'Men', href: '/men/' },
+		{ label: 'Women', href: '/women/' },
+		{ label: 'New Arrivals', href: '/new-arrivals/' },
+		{ label: 'Best Sellers', href: '/best-sellers/' },
+		{ label: 'About', href: '/about/' }
 	];
 
 	let menuOpen = $state(false);
+	let searchOpen = $state(false);
 	let hamburgerButton: HTMLButtonElement | undefined = $state();
+	let searchButton: HTMLButtonElement | undefined = $state();
 	let drawerEl: HTMLDivElement | undefined = $state();
 
 	function openMenu() {
@@ -53,6 +57,15 @@
 			document.body.style.overflow = '';
 		};
 	});
+
+	// Return focus to the search button when the search overlay closes.
+	let wasSearchOpen = false;
+	$effect(() => {
+		if (wasSearchOpen && !searchOpen) {
+			searchButton?.focus();
+		}
+		wasSearchOpen = searchOpen;
+	});
 </script>
 
 <header class="sticky top-0 z-40 border-b border-line bg-paper/90 pt-safe backdrop-blur">
@@ -86,18 +99,34 @@
 		<div class="ml-auto flex items-center gap-1">
 			<button
 				type="button"
+				bind:this={searchButton}
+				onclick={() => (searchOpen = true)}
 				aria-label="Search"
 				class="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-cream"
 			>
 				<Search class="size-5" aria-hidden="true" />
 			</button>
-			<button
-				type="button"
+			<a
+				href="/account/"
 				aria-label="Account"
 				class="hidden h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-cream sm:flex"
 			>
 				<User class="size-5" aria-hidden="true" />
-			</button>
+			</a>
+			<a
+				href="/wishlist/"
+				aria-label="Wishlist"
+				class="relative flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-cream"
+			>
+				<Heart class="size-5" aria-hidden="true" />
+				{#if wishlist.count > 0}
+					<span
+						class="absolute top-0.5 right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-[11px] font-bold text-white"
+					>
+						{wishlist.count}
+					</span>
+				{/if}
+			</a>
 			<button
 				type="button"
 				data-cart-button
@@ -117,6 +146,8 @@
 		</div>
 	</div>
 </header>
+
+<SearchOverlay bind:open={searchOpen} />
 
 {#if menuOpen}
 	<div class="fixed inset-0 z-50 lg:hidden">
@@ -161,6 +192,31 @@
 						{link.label}
 					</a>
 				{/each}
+				<div class="mt-2 border-t border-line pt-2">
+					<a
+						href="/wishlist/"
+						onclick={closeMenu}
+						class="flex h-12 items-center gap-3 rounded-xl px-3 font-display text-lg font-semibold transition-colors hover:bg-cream"
+					>
+						<Heart class="size-5" aria-hidden="true" />
+						Wishlist
+						{#if wishlist.count > 0}
+							<span
+								class="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-[11px] font-bold text-white"
+							>
+								{wishlist.count}
+							</span>
+						{/if}
+					</a>
+					<a
+						href="/account/"
+						onclick={closeMenu}
+						class="flex h-12 items-center gap-3 rounded-xl px-3 font-display text-lg font-semibold transition-colors hover:bg-cream"
+					>
+						<User class="size-5" aria-hidden="true" />
+						Account
+					</a>
+				</div>
 			</nav>
 		</div>
 	</div>

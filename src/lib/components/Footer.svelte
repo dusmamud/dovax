@@ -13,31 +13,31 @@
 		{
 			title: 'Shop',
 			links: [
-				{ label: 'Men', href: '/#categories' },
-				{ label: 'Women', href: '/#categories' },
-				{ label: 'New Arrivals', href: '/#best-sellers' },
-				{ label: 'Best Sellers', href: '/#best-sellers' },
-				{ label: 'Sale', href: '/#' }
+				{ label: 'Men', href: '/men/' },
+				{ label: 'Women', href: '/women/' },
+				{ label: 'New Arrivals', href: '/new-arrivals/' },
+				{ label: 'Best Sellers', href: '/best-sellers/' },
+				{ label: 'Sale', href: '/sale/' }
 			]
 		},
 		{
 			title: 'Support',
 			links: [
-				{ label: 'Contact Us', href: '/#' },
-				{ label: 'Shipping', href: '/#' },
-				{ label: 'Returns', href: '/#' },
-				{ label: 'Size Guide', href: '/#' },
-				{ label: 'FAQs', href: '/#' }
+				{ label: 'Contact Us', href: '/contact/' },
+				{ label: 'Shipping', href: '/shipping/' },
+				{ label: 'Returns', href: '/returns/' },
+				{ label: 'Size Guide', href: '/size-guide/' },
+				{ label: 'FAQs', href: '/faq/' }
 			]
 		},
 		{
 			title: 'Company',
 			links: [
-				{ label: 'About', href: '/#technology' },
-				{ label: 'Our Technology', href: '/#technology' },
-				{ label: 'Sustainability', href: '/#' },
-				{ label: 'Careers', href: '/#' },
-				{ label: 'Blog', href: '/#' }
+				{ label: 'About', href: '/about/' },
+				{ label: 'Our Technology', href: '/technology/' },
+				{ label: 'Sustainability', href: '/sustainability/' },
+				{ label: 'Careers', href: '/careers/' },
+				{ label: 'Blog', href: '/blog/' }
 			]
 		}
 	];
@@ -95,10 +95,13 @@
 		>
 			<p>© 2026 Dovax. All rights reserved.</p>
 			<div class="flex gap-6">
-				<a href="/#" class="inline-flex min-h-11 items-center transition-colors hover:text-ink">
+				<a
+					href="/privacy/"
+					class="inline-flex min-h-11 items-center transition-colors hover:text-ink"
+				>
 					Privacy Policy
 				</a>
-				<a href="/#" class="inline-flex min-h-11 items-center transition-colors hover:text-ink">
+				<a href="/terms/" class="inline-flex min-h-11 items-center transition-colors hover:text-ink">
 					Terms of Service
 				</a>
 			</div>

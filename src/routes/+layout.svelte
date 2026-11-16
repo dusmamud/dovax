@@ -7,7 +7,11 @@
 	import Header from '#lib/components/Header.svelte';
 	import Footer from '#lib/components/Footer.svelte';
 	import CartDrawer from '#lib/components/CartDrawer.svelte';
+	import Toasts from '#lib/components/Toasts.svelte';
 	import { cart } from '#lib/stores/cart.svelte.js';
+	import { wishlist } from '#lib/stores/wishlist.svelte.js';
+	import { orders } from '#lib/stores/orders.svelte.js';
+	import { recentlyViewed } from '#lib/stores/recently-viewed.svelte.js';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
@@ -24,6 +28,9 @@
 
 	onMount(() => {
 		cart.load();
+		wishlist.load();
+		orders.load();
+		recentlyViewed.load();
 	});
 </script>
 
@@ -45,3 +52,4 @@
 </main>
 <Footer />
 <CartDrawer />
+<Toasts />

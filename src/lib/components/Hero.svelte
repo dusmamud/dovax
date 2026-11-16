@@ -25,7 +25,7 @@
 				Modern sneakers designed for everyday comfort, performance and style.
 			</p>
 			<a
-				href="/#best-sellers"
+				href="/shop/"
 				class="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-ink px-7 text-sm font-semibold text-white transition-colors hover:bg-black"
 			>
 				Shop Collection

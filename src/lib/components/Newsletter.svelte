@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, Check } from '@lucide/svelte';
 	import { reveal } from '#lib/actions/reveal.js';
+	import { toasts } from '#lib/stores/toasts.svelte.js';
 
 	let email = $state('');
 	let error = $state('');
@@ -16,6 +17,7 @@
 		}
 		error = '';
 		subscribed = true;
+		toasts.push("You're on the list — welcome to Dovax.");
 	}
 </script>
 

@@ -3,10 +3,30 @@
 	import { reveal } from '#lib/actions/reveal.js';
 
 	const categories = [
-		{ name: "Men's Sneakers", image: '/images/category-mens.jpg', alt: "Men's sneakers" },
-		{ name: "Women's Sneakers", image: '/images/category-womens.jpg', alt: "Women's sneakers" },
-		{ name: 'Running Shoes', image: '/images/category-running.jpg', alt: 'Running shoes' },
-		{ name: 'Lifestyle', image: '/images/category-lifestyle.jpg', alt: 'Lifestyle sneakers' }
+		{
+			name: "Men's Sneakers",
+			image: '/images/category-mens.jpg',
+			alt: "Men's sneakers",
+			href: '/men/'
+		},
+		{
+			name: "Women's Sneakers",
+			image: '/images/category-womens.jpg',
+			alt: "Women's sneakers",
+			href: '/women/'
+		},
+		{
+			name: 'Running Shoes',
+			image: '/images/category-running.jpg',
+			alt: 'Running shoes',
+			href: '/shop/?category=running'
+		},
+		{
+			name: 'Lifestyle',
+			image: '/images/category-lifestyle.jpg',
+			alt: 'Lifestyle sneakers',
+			href: '/shop/?category=lifestyle'
+		}
 	];
 </script>
 
@@ -19,7 +39,7 @@
 	</div>
 	<div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
 		{#each categories as category (category.name)}
-			<a href="/#best-sellers" class="reveal group block" use:reveal>
+			<a href={category.href} class="reveal group block" use:reveal>
 				<div class="overflow-hidden rounded-2xl">
 					<img
 						src={category.image}

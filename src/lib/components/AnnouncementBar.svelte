@@ -9,7 +9,7 @@
 		<p class="text-center text-xs sm:text-sm">
 			Free shipping on orders above ₹999
 			<a
-				href="/#best-sellers"
+				href="/shop/"
 				class="ml-2 inline-flex items-center gap-1 font-semibold underline underline-offset-2"
 			>
 				Shop Now

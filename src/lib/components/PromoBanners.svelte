@@ -7,6 +7,7 @@
 			eyebrow: 'Built for Real Life',
 			copy: 'From city streets to weekend escapes, our sneakers move with you.',
 			cta: "Shop Men's",
+			href: '/men/',
 			image: '/images/banner-mens.jpg',
 			alt: "Man wearing Dovax sneakers",
 			buttonClass: 'bg-white text-ink hover:bg-cream'
@@ -15,6 +16,7 @@
 			eyebrow: 'Style in Every Step',
 			copy: 'Designed for comfort, made for your everyday.',
 			cta: "Shop Women's",
+			href: '/women/',
 			image: '/images/banner-womens.jpg',
 			alt: "Woman wearing Dovax sneakers",
 			buttonClass: 'bg-ink text-white hover:bg-black'
@@ -44,7 +46,7 @@
 						{banner.copy}
 					</p>
 					<a
-						href="/#categories"
+						href={banner.href}
 						class="mt-6 inline-flex h-11 w-fit items-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors {banner.buttonClass}"
 					>
 						{banner.cta}
