@@ -3,9 +3,9 @@
 	import { reveal } from '#lib/actions/reveal.js';
 
 	const callouts = [
-		{ label: 'Breathable Knit', position: 'top-[18%] left-[12%]' },
-		{ label: 'Responsive Cushioning', position: 'top-[48%] right-[8%]' },
-		{ label: 'Durable Outsole', position: 'bottom-[14%] left-[28%]' }
+		{ label: 'Breathable Knit', position: 'top-[16%] left-[35%]' },
+		{ label: 'Responsive Cushioning', position: 'top-[64%] right-[10%]' },
+		{ label: 'Durable Outsole', position: 'bottom-[12%] left-[25%]' }
 	];
 </script>
 
@@ -39,14 +39,18 @@
 
 		<div>
 			<div class="relative">
+				<div
+					class="absolute top-1/2 left-1/2 h-3/4 w-3/4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-3xl"
+					aria-hidden="true"
+				></div>
 				<img
-					src="/images/tech-closeup.jpg"
-					alt="Close-up of Dovax sneaker materials and cushioning"
-					width="1200"
-					height="900"
+					src="/images/tech-shoe.png"
+					alt="White and blue Dovax running sneaker"
+					width="1064"
+					height="528"
 					loading="lazy"
 					decoding="async"
-					class="w-full rounded-2xl object-cover"
+					class="relative w-full"
 				/>
 				{#each callouts as callout (callout.label)}
 					<div

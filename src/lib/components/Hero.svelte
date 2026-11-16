@@ -52,17 +52,21 @@
 		</div>
 
 		<div class="relative">
+			<div
+				class="absolute bottom-[6%] left-1/2 h-8 w-3/4 -translate-x-1/2 rounded-full bg-black/15 blur-xl"
+				aria-hidden="true"
+			></div>
 			<img
-				src="/images/hero-shoe.jpg"
-				alt="Dovax sneaker on a clean studio background"
-				width="1600"
-				height="1067"
+				src="/images/hero-shoe.png"
+				alt="Red Dovax sneaker"
+				width="876"
+				height="541"
 				fetchpriority="high"
 				decoding="async"
-				class="w-full rounded-2xl object-cover"
+				class="relative w-full drop-shadow-xl"
 			/>
 			<p
-				class="absolute -bottom-3 left-4 hidden items-center gap-2 rounded-full bg-paper px-4 py-2 text-sm italic shadow-md sm:flex"
+				class="absolute -bottom-2 left-2 hidden items-center gap-2 rounded-full bg-paper px-4 py-2 text-sm italic shadow-md sm:flex"
 			>
 				<CornerLeftUp class="size-4 -rotate-12" aria-hidden="true" />
 				<span class="font-['Segoe_Script','Bradley_Hand',cursive]">Designed for what's next</span>
